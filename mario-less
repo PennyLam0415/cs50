@@ -1,0 +1,29 @@
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    int height, row, column, space;
+    do
+    {
+        height = get_int("Height: ");
+    }
+    while (height < 1 || height > 8);
+//行(打橫哥D)由0開始, 高度永遠大於行數
+    for (row = 0; row < height; row++)
+    {   //由於從上幾行運算已經得知height同row的參數,所以下一行"可以"同埋"只能"用height同row做計算
+        //for loop 入面的第一句同埋第三句(即increment)不是已知數，是一個新的以及可變的(即increment)數
+        for (space = 0 ; space < height - row - 1 ; space++)
+        {
+
+            printf(" ");
+        }
+        //列(nest響row 入面,所以呢個column表示行row入面的每一個"#")
+        for (column = 0; column <= row; column++)
+        {
+            printf("#");
+        }
+
+        printf("\n");
+    }
+}
