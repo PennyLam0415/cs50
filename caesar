@@ -1,0 +1,59 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+int main(int argc, string argv[])
+{
+//check command line arguments 是否只有一串嘅野 (可能係文字或數字)
+    if (argc != 2)
+    {
+        printf("Usage: ./caesar key\n");
+        return 1; //return a value of 1 (which tends to signify an error) , 所以呢個功課要求用"1"代表輸入不合要求嘅command line arguments嘅狀況
+    }
+
+//loop command line arguments 序列排第一的文字入面的每一個char
+    for (int i = 0; i < strlen(argv[1]); i++)
+    {
+        //argv[1][i]即係command line arguments 序列排第一(由0開始起計)的文字入面,序列由0至i的char(?)
+        if (!isdigit(argv[1][i]))
+        {
+            printf("Usage: ./caesar key\n");
+            return 1;
+        }
+
+//argv[1]係文字嚟, 所以要轉返做int, 等下面嘅(plaintext[j] - 65 + k) % 26 + 65)哥D可以做倒運算
+        int k = atoi(argv[1]);
+
+        string plaintext = get_string("plaintext:  ");
+        printf("ciphertext: ");
+        //printf(" \n");
+
+//print 完ciphertext: 之後,唔加"\n", 下條code嘅結果會直接響旁邊出現
+        for (int j = 0 ; j < strlen(plaintext); j++)
+        {
+            if (isupper(plaintext[j]))
+            {
+                printf("%c", (plaintext[j] - 65 + k) % 26 + 65);
+            }
+            else if (islower(plaintext[j]))
+            {
+                printf("%c", (plaintext[j] - 97 + k) % 26 + 97);
+            }
+            else
+            {
+                printf("%c", (plaintext[j]));
+            }
+        }
+
+
+
+    }
+
+    printf("\n");
+}
+
+
+
