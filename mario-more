@@ -1,0 +1,35 @@
+#include <cs50.h>
+#include <stdio.h>
+
+int main(void)
+{
+    int height, row, column, space;
+    do
+    {
+        height = get_int("Height: ");
+    }
+    while (height < 1 || height > 8);
+//行(打橫哥D)由0開始, 高度永遠大於行數
+    for (row = 0; row < height; row++)
+    {
+        for (space = 0 ; space < height - row - 1 ; space++)
+        {
+
+            printf(" ");
+        }
+        //列(nest響row 入面,所以呢個column表示行row入面的每一個"#"; 記住，row 係打横的每一行，當row轉到一個新數字時，nest 響row入面嘅space, column 都要由零開始)
+        for (column = 0; column <= row; column++)
+        {
+            printf("#");
+        }
+
+        printf("  ");
+
+        for (column = 0; column <= row; column++)
+        {
+            printf("#");
+        }
+
+        printf("\n");
+    }
+}
