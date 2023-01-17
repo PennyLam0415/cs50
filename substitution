@@ -1,0 +1,107 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+bool check_key_char(string key);
+//這個是breadcrumb, 記得要加分號
+
+int main(int argc, string argv[])
+{
+
+    if (argc != 2)
+    {
+        printf("Usage: ./substitution key\n");
+        return 1;
+        //return 1 in the main function means that the program does not execute successfully and there is some error.
+    }
+
+//check_key_char 呢個function 真正嘅輸入係"argv[1]"
+    if (!check_key_char(argv[1]))
+    {
+        printf("Key must contain 26 characters.\n");
+        return 1;
+        //過左呢條,會得到一個合格的KEY
+    }
+
+    string plaintext = get_string("plaintext:  ");
+    int length = strlen(plaintext);
+    string key = argv[1]; //唔用呢條都可以正常運行，可能因為上面的
+    //＂if (!check_key_char(argv[1]))＂以及下面的 "bool check_key_char(string key)＂
+    char ciphertext [length + 1]; //呢條的作用是響開頭declare左 ciphertext嘅datatype 同有幾多個array,
+    //declare 不用寫等于符號
+
+//對plaintext進行轉換成ciphertext的處理
+    for (int i = 0; i < length; i++)
+    {
+        if (islower(plaintext[i]))
+        {
+            int index_of_plain = plaintext[i] - 97;
+            ciphertext[i] = key[index_of_plain];//從上一條code 取得plaintext的英文字母順序代碼, 即"index_of_plaint"之後,
+            //把這些"index_of_plaintext"應用到key之上, 即key的第一順位就是plaintext的a, 如此類推, 跟住再assign 個 "ciphertext[i]"
+            if (isupper(ciphertext[i]))
+            {
+                ciphertext[i] += 32;//如果key是大寫,但plaintext是細寫, ciphertext必須變返細寫
+            }
+        }
+
+        else if (isupper(plaintext[i]))
+        {
+            int index_of_plain = plaintext[i] - 65;
+            ciphertext[i] = key[index_of_plain];//從上一條code 取得a=0, b=1.....即"index_of_plain"之後,
+            //把這些"index_of_plaintext"應用到key之上, 即key的第一順位就是plaintext的a, 如此類推, 跟住再assign 個 "ciphertext[i]"
+            if (islower(ciphertext[i]))
+            {
+                ciphertext[i] -= 32;//如果key是細寫,但plaintext是大寫, ciphertext必須變返大寫
+            }
+        }
+
+        else
+        {
+            ciphertext[i] = plaintext[i];
+        }
+    }
+    ciphertext[length] = '\0'; //這是NUL, 用來標示string的結尾
+    printf("ciphertext: %s\n", ciphertext);
+
+
+
+}
+
+
+
+bool check_key_char(string key)
+{
+    //由於這是function, 佢入面嘅 "key"是一個parameter,可以及將會由其他變量-"argument"取代
+    int length = strlen(key);
+
+    if (length != 26)
+    {
+        return 0; //行到呢條, 就會上返去 printf("Key must contain 26 characters.\n");
+        //其實return false都得, return 0 means that the user-defined function is returning false.
+    }
+
+    for (int i = 0; i < length; i++)
+    {
+        key[i] = toupper(key[i]);
+        //呢條toupper都唔work, 但係CS50個checking話handle倒KEYr如MMCcEFGHIJKLMNOPqRqTUVWXeZ
+    }
+
+
+    for (int i = 0; i < length; i++)
+    {
+        if (!isalpha(key[i]))
+        {
+            return false;  //行到呢條, 就會上返去 printf("Key must contain 26 characters.\n");
+        }
+        for (int j = i + 1; j < length; j++)
+        {
+            if (key[i] == key[j])
+            {
+                return false;  //行到呢條, 就會上返去 printf("Key must contain 26 characters.\n");
+            }
+        }
+    }
+    return true;
+}
+
