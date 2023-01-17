@@ -1,0 +1,53 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <math.h>
+
+//每次改左code要運行時都要make XXXXXX, 否則都係運行返舊版本
+int main(void)
+{
+    // TODO: Prompt for start size
+    int start;
+    //start 不能在do while loop 入面define, 否則不能運行
+    do
+    {
+        start = get_int("Start size: ");
+    }
+    while (start < 9);//while 係放令到個loop持續嘅條件
+
+
+
+    // TODO: Prompt for end size
+    int end;
+
+    do
+    {
+        end = get_int("End size: ");
+    }
+    while (end < start);
+
+
+
+    // TODO: Calculate number of years until we reach threshold
+    if (start == end)
+    {
+        printf("Years: 0\n");
+
+    }
+
+    else
+    {
+        int year = 0;
+        do
+        {
+            start = start + (start / 3) - (start / 4);
+            year ++;
+        }
+        while (start < end);
+
+
+        // TODO: Print number of years
+        printf("Years: %i\n", year);
+    }
+
+
+}
