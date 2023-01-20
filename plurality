@@ -42,6 +42,8 @@ int main(int argc, string argv[])
         printf("Maximum number of candidates is %i\n", MAX);
         return 2;
     }
+    // 把argv[1]定義為array_candidate入面的第0個name, argv[2]定義為array_candidate入面的第1個name, argv[3]定義為array_candidate入面的第2個name
+    // 把argv[1]定義為array_candidate入面的第0個, 之後再把array_candidate入面的第0個name所附的votes定義為0
     for (int i = 0; i < candidate_count; i++)
     {
         candidates[i].name = argv[i + 1];
