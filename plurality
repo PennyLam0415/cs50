@@ -1,0 +1,109 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+// Max number of candidates
+#define MAX 9
+
+// Candidates have name and vote count
+typedef struct
+{
+    string name;
+    int votes;
+}
+candidate;
+//candidate 是個array 的名字, array入面的elements叫candidates, candidates有name 同 votes
+
+// Array of candidates
+// 下面是declare candidate 入面的elements叫candidates嘅code, candidate的populaion 是MAX
+candidate candidates[MAX];
+
+// (define)Number of candidates (as a integer)
+int candidate_count;
+
+// Function prototypes
+bool vote(string name);
+void print_winner(void);
+
+int main(int argc, string argv[])
+{
+    // Check for invalid usage
+    // argc < 2 即只有一個candidate 都可以
+    if (argc < 2)
+    {
+        printf("Usage: plurality [candidate ...]\n");
+        return 1;
+    }
+
+    // Populate array of candidates
+    candidate_count = argc - 1;
+    if (candidate_count > MAX)
+    {
+        printf("Maximum number of candidates is %i\n", MAX);
+        return 2;
+    }
+    for (int i = 0; i < candidate_count; i++)
+    {
+        candidates[i].name = argv[i + 1];
+        candidates[i].votes = 0;
+    }
+
+    int voter_count = get_int("Number of voters: ");
+
+    // Loop over all voters
+    for (int i = 0; i < voter_count; i++)
+    {
+        string name = get_string("Vote: ");
+
+        // Check for invalid vote
+        if (!vote(name))
+        {
+            printf("Invalid vote.\n");
+        }
+    }
+
+    // Display winner of election
+    print_winner();
+}
+
+// Update vote totals given a new vote
+bool vote(string name)
+{
+    // TODO
+    // 假設candidate_count是3, i<3, 則變成candidates[0],candidates[1],candidates[2],就可以揾 name 同 candidate的所有名字核對
+
+    for (int i = 0; i < candidate_count; i++  )
+    {
+        if (strcmp(name, candidates[i].name) == 0)
+        {
+            candidates[i].votes++;
+            return true;
+        }
+    }
+    return false;
+}
+
+// Print the winner (or winners) of the election
+void print_winner(void)
+{
+    // TODO
+    int maxvotes = 0;
+    // 查看每一個candidates的votes數, 第一個loop如果vote數大于零則成為max, 查看完所有candidates則for loop 完結, 得到maxvotes的數宇, 帶去下一個loop
+    for (int i = 0; i < candidate_count ; i++)
+    {
+        if (candidates[i].votes > maxvotes)
+        {
+            maxvotes = candidates[i].votes;
+        }
+    }
+
+    // 用每一個candidates 與從上一個loop帶來的maxvotes做對比
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (candidates[i].votes == maxvotes)
+        {
+            printf("%s\n", candidates[i].name);
+        }
+    }
+    return;
+}
