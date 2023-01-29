@@ -1,0 +1,11 @@
+sort1 uses: bubble sort
+
+How do you know?: the difference in time being spent between sorting reversed50000.txt and sorted50000.txt is the largest, consider O(n^2) and Ω(n) 
+
+sort2 uses: merge sort
+
+How do you know?: sort2 took shortest time to sort sorted50000.txt and reversed50000.txt among 3 sorts
+
+sort3 uses: selection sort
+
+How do you know?: after knowing the sorting types of sort1 and sort2, selection sort is what has left to be chosen.
