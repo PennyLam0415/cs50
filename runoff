@@ -193,7 +193,8 @@ bool print_winner(void)
         {
             printf("%s\n", candidates[i].name);
             return true;
-            //break 是沒有用的
+            //break 是沒有用的以及什麼也沒有(只有print)的話, 會不斷顯示winner的結果,
+            //呢個時候需要用ctrl + `
         }
     }
 
@@ -214,7 +215,8 @@ int find_min(void)
         }
     }
 
-    return 0;
+    return min;
+    //唔係return 0, 而係要return返個min 個數出嚟
 }
 
 // Return true if the election is tied between all candidates, false otherwise
