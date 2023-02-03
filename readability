@@ -12,6 +12,7 @@ int main(void)
 {
     string text = get_string("Text: ");
     int index = get_index(text);
+    // get_index是一個user-defined funcation
     //把get_index return出嚟的結果define為integer
 
     if (index < 1)
